@@ -18,15 +18,18 @@ router.get('/projects/:projectId/tasks/:taskId', (req, res, next) => {
 
 // POST route => to create a new task
 router.post('/tasks', (req, res, next)=>{
-  
+  console.log('+++++++++++++++++++++'+req.body.projectID);
   Task.create({
       title: req.body.title,
       description: req.body.description,  
       project: mongoose.Types.ObjectId(req.body.projectID)
   })
     .then(response => {
-        Project.findOneAndUpdate(req.body.projectID, { $push:{ tasks: response._id } })
-        .then(theResponse => {
+      console.log('+++++++++++++++++++++'+req.body.projectID);
+
+        Project.findOneAndUpdate({_id:req.body.projectID}, { $push:{ tasks: response._id } })
+        .then(theResponse => {   console.log('+++++++++++++++++++++'+req.body.projectID);
+console.log(theResponse);
             res.json(theResponse);
         })
         .catch(err => {

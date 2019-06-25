@@ -27,7 +27,7 @@ router.post("/projects", (req, res, next) => {
 
 
 router.get("/projects", (req, res, next) => {
-  Project.find()
+  Project.find().populate('tasks')
   .then(allProjects => {
   console.log('Retrieved all allProjects from DB:', allProjects);
   res.json(allProjects);
